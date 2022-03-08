@@ -1,5 +1,4 @@
 import os
-import pyvista as pv
 import pandas as pd
 import numpy as np
 import csv
@@ -327,7 +326,7 @@ def disp_results(filename, items):
 
 net = load_pretrained_model()
 filename = '/docker_demo/src/eingabe_model/bool_model/Common' #binvox
-csvfilename = ''/docker_demo/src/eingabe_model/csv_file/ssd_information.csv'
+csvfilename = '/docker_demo/src/eingabe_model/csv_file/ssd_information.csv'
 
 labels = get_predicted_label(filename,net,csvfilename) #display predicted boxes
 #disp_results(filename, labels)
