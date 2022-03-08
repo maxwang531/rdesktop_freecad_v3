@@ -69,7 +69,7 @@ file_name_1 = 'model'
 file_name_2 = "model"
 file_name_3 = 'Solid'
 
-toolpath1 = "/usr/lib/freecad/Mod/Path/Tools/Bit/157mm_Ball_End.fctb"
+toolpath1 = "/usr/lib/freecad/Mod/Path/Tools/Bit/317mm_long_Ball_End.fctb"
 toolpath2 = "/usr/lib/freecad/Mod/Path/Tools/Bit/317mm_Ball_End.fctb"
 
 
@@ -79,6 +79,7 @@ checkpoint_dir = "/config/training_data/rl_model/checkpoint/"
 log_dir = "/config/training_data/rl_model/log/"
 
 #Model Use
+csv_file = '/config/ausgabe_ngc/operation_parameter.csv'
 gcodePath_surface = '/config/ausgabe_ngc/txt/surface_operation.txt'
 gcodePath_surface_neu = '/config/ausgabe_ngc/neu_txt/surface_operation.txt'
 #model_file =  '/config/training_data/rl_model/demo_500'
@@ -355,7 +356,7 @@ class MyEnv(Env):
         high_np = np.array(high,dtype=np.float32)
         self.observation_space = spaces.Box(low_np,high_np,dtype=np.float32)
         self.voxel_state = None
-        self.time_length = 2
+        self.time_length = 10
 
     def step(self, action):
         surface(self.werkzeuglist[list(action)[0].item()],self.werkzeugdiameter[list(action)[0].item()],
@@ -418,7 +419,7 @@ class MyEnv(Env):
         pass
     def reset(self):
         self.voxel_state = [self.roh_voxel_anzahl,0,self.roh_ziel_voxel_anzahl,self.cutmaterial_faces_rohteil,self.cutmaterial_edges_rohteil,self.cutmaterial_points_rohteil]
-        self.time_length = 2
+        self.time_length = 10
         return np.array(self.voxel_state, dtype=np.float32)
     def close(self):
         env.close()
@@ -447,6 +448,10 @@ position = reward_list.index(max(reward_list))
 #print(position)
 
 #werkzeugweg
+operation_data = [werkzeuglist[info_list_total[position][0]],werkzeugdiameter[info_list_total[position][0]],info_list_total[position][1],info_list_total[position][2]]
+name = ['werkzeug','werkzeugdiameter','cutpattern','stepover']
+operation_dataframe = pd.DataFrame(data=operation_data)
+operation_dataframe.to_csv(csv_file,encoding='gbk')
 
 surface(werkzeuglist[info_list_total[position][0]],werkzeugdiameter[info_list_total[position][0]],cut_pattern_zahl=info_list_total[position][1],stepover=info_list_total[position][2])
 job.PostProcessorOutputFile = gcodePath_surface
