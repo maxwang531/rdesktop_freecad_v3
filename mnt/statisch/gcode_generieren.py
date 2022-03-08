@@ -42,6 +42,7 @@ gcodePath_site1 = '/config/ausgabe_ngc/txt/site1_operation.txt'
 gcodePath_site2 = '/config/ausgabe_ngc/txt/site2_operation.txt'
 gcodePath_site3 = '/config/ausgabe_ngc/txt/site3_operation.txt'
 gcodePath_site4 = '/config/ausgabe_ngc/txt/site4_operation.txt'
+stepdown = 2
 
 DOC=App.openDocument(filepath_original)
 DOC.recompute()
@@ -1405,7 +1406,7 @@ def werkzeug(toolpath,name2,horizrapid = "15mm/s",vertrapid = "2mm/s",horizfeed=
     name3.recompute()
     return name3.Diameter
 
-def adaptive_operation(facName, use_outline, werkzeugname, finishing_profile = 0,stepdown = 5,force_inside_out = 1,helixangle = 5,
+def adaptive_operation(facName, use_outline, werkzeugname, finishing_profile = 0,stepdown = stepdown,force_inside_out = 1,helixangle = 5,
                        helixconeangle = 0,helixdiameterlimit = 0, keeptooldownratio = 3,
                        liftdistance = 0 ,operation_type = 0, si_de = 0, stepover = 20 ,stocktoleave = 0,
                        tolerance = 0.1 ,use_helix_arcs = 1 , finishdepth = 0, name = 0):
