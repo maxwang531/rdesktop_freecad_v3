@@ -69,8 +69,8 @@ file_name_1 = 'model'
 file_name_2 = "model"
 file_name_3 = 'Solid'
 
-toolpath1 = "/usr/lib/freecad/Mod/Path/Tools/Bit/317mm_long_Ball_End.fctb"
-toolpath2 = "/usr/lib/freecad/Mod/Path/Tools/Bit/317mm_Ball_End.fctb"
+toolpath1 =  "/usr/lib/freecad/Mod/Path/Tools/Bit/317mm_Ball_End.fctb"
+toolpath2 =  "/usr/lib/freecad/Mod/Path/Tools/Bit/317mm_long_Ball_End.fctb"
 
 
 # Create save dir
@@ -245,7 +245,7 @@ def werkzeug(toolpath,name2,horizrapid = "15mm/s",vertrapid = "2mm/s",):
 #3D Surface
 def surface(werkzeugname,
             boundaryadjustment ,cut_pattern_zahl = 2, layer_mode_zahl = 0,
-            stepover = 10, stepdown = 1,
+            stepover = 10, 
             circular_use_G2_G3_bool = 0, boundary_enforcement_bool = 0,
             name = 0):
     sur_face = PathSurface.Create('Surface%d'%(name))
@@ -259,9 +259,6 @@ def surface(werkzeugname,
 
     sur_face.setExpression('StepOver', None)
     sur_face.StepOver = stepover
-
-    sur_face.setExpression('StepDown', None)
-    sur_face.StepDown = stepdown
 
     circular_use_G2_G3 = ['true', '']
     sur_face.CircularUseG2G3 = bool(circular_use_G2_G3[circular_use_G2_G3_bool])
@@ -360,8 +357,7 @@ class MyEnv(Env):
 
     def step(self, action):
         surface(self.werkzeuglist[list(action)[0].item()],self.werkzeugdiameter[list(action)[0].item()],
-                cut_pattern_zahl= list(action)[1].item(),stepover= self.stepover[list(action)[2].item()],
-                stepdown=5)
+                cut_pattern_zahl= list(action)[1].item(),stepover= self.stepover[list(action)[2].item()])
         simulator()
         export()
         voxel()
